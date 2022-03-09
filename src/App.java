@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+
+
 public class App  implements ActionListener {
 
     // Swing Components
@@ -50,7 +52,7 @@ public class App  implements ActionListener {
     private RegisterForm register;
 
 
-
+    // Jtable produkter
     private JTable productTable;
     private JTable orderHistory;
     private JTable productsInOrderTable;
@@ -73,8 +75,6 @@ public class App  implements ActionListener {
         register = new RegisterForm();
         initListeners();
         this.controller = controller;
-
-
 
 
 
@@ -141,7 +141,6 @@ public class App  implements ActionListener {
 
     public void displayTable() {
 
-
         this.productModel = new DefaultTableModel(col,0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -153,7 +152,10 @@ public class App  implements ActionListener {
         productTable.getTableHeader().setReorderingAllowed(false);
         productTable.setModel(productModel);
 
+
     }
+
+
 
 
 
@@ -177,7 +179,7 @@ public class App  implements ActionListener {
     }
 
     public void products(ArrayList<ArrayList<String>> a) {
-        String[] col = {"VALUE 1","VALUE 2","VALUE 3"};
+        String[] col = {"Product_id","Product_name","Description","Quantity", "Price","Supplier", "Discount rate"};
         this.productModel = new DefaultTableModel(col,0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -197,11 +199,6 @@ public class App  implements ActionListener {
     public void supplierGetValue() {
         System.out.println(suppliersTable.getSelectedRow());
     }
-
-
-
-
-
 
 
     private void getValue(JTable t) {
@@ -274,13 +271,13 @@ public class App  implements ActionListener {
             controller.emptyCart();
         }
 
-
         if (e.getSource() == cartConfirm) {
             controller.cartConfirm();
         }
 
         if (e.getSource() == searchButton) {
             controller.search(discountOnlyCheckBox.isSelected());
+
 
         }
     }

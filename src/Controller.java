@@ -12,6 +12,8 @@ public class Controller {
         add();
 
         view.suppliers(model.selectSuppliers());
+
+        view.products(model.displayProducts());
     }
 
     public void add() {
