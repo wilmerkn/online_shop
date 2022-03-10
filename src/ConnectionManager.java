@@ -257,8 +257,18 @@ public class ConnectionManager {
                 System.out.println(rs.getString(4));
                 if (Integer.parseInt(rs.getString(5)) < count){
                     System.out.println("Sorry, we don't have enough in stock to match your purchase request, please lower the amount");
+                    conn.close();
                 }
+                //Om quantity är ok, lägg till i cart och subtrahera från DB
+                else{
+                    st = conn.prepareStatement("UPDATE product set quantity = ? WHERE product_id = ?");
+                    st.setInt(1, Integer.parseInt(rs.getString(5)) - count);
+                    st.setInt(2, Integer.parseInt(id));
+                    st.executeUpdate();
+                    conn.close();
+                    //Något fel med matten haha, uppdateras fel
 
+                }
 
 
             }
@@ -268,6 +278,7 @@ public class ConnectionManager {
         }
 
     }
+
     //NÄSTAN KLAR
     public void loginCheck(String username, String password) {
         try {
@@ -280,7 +291,7 @@ public class ConnectionManager {
 
             if (rs.next()) {
                 if (password.equals(rs.getString(3))) {
-                    //kolla så att password stämmer och sen kolla om admin, skickas till controller som intierar login
+                    //kollar så att password stämmer och sen kolla om inlog är admin
                     controller.loginOK(rs.getBoolean(5));
                     conn.close();
                     return;

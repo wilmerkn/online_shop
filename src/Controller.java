@@ -9,10 +9,13 @@ public class Controller {
     public Controller() {
         this.view = new App(this);
         this.model = new ConnectionManager(this);
-        view.products(model.selectProducts());
 
-        //view.displayTable();
-      //  add();
+        view.displayTable();
+        add();
+        //Tror dessa är i fel ordning eller ja det blir iaf som en stutter vid launch av program, där olika tables visas.
+        view.products(model.selectProducts());
+        //om jag förstått rätt så ska all info visas om products när man startar
+
 
 
     }
