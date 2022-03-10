@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class Controller {
     private App view;
@@ -10,9 +12,10 @@ public class Controller {
         view.displayTable();
         add();
 
-        view.products(model.selectProducts());
         view.suppliers(model.selectSuppliers());
+
     }
+
 
     public void add() {
         System.out.println("TEST!");
@@ -22,12 +25,6 @@ public class Controller {
             view.addRow(data.get(i));
         }
 
-    }
-    public void login(String username, String password){
-        model.loginCheck(username,password);
-    }
-    public void loginOK(boolean admin){
-        view.initLogin(admin);
     }
 
     public void order() {
@@ -42,9 +39,8 @@ public class Controller {
         System.out.println("Remove Product");
     }
 
-    public void addProduct(String id, int count) {
-        System.out.println(id + " " + count);
-        model.addProduct(id, count);
+    public void addProduct() {
+        System.out.println("Add Product");
     }
 
     public void addDiscount() {
@@ -80,13 +76,26 @@ public class Controller {
         System.out.println("Empty Cart");
     }
 
-    public void search(boolean discountOnly) {
-        if (discountOnly) {
-            System.out.println("Search Discount");
-            view.products(model.displayDiscountProducts());
-        } else {
-            view.products(model.displayProducts());
-            System.out.println("Search");
+    public void search(boolean discountOnly, String textField) {
+
+        if (discountOnly && !Objects.equals(textField, "")) {
+            System.out.println("Search Discount1");
+
+            view.products(model.displayDiscountProducts(textField));
+
+        } else if (discountOnly && textField.equals("")){
+            // displaya vanligt
+            view.products(model.displayDiscountProducts1());
+            System.out.println("Search Discount2");
+
+        } else if (!discountOnly && !Objects.equals(textField, "")){
+
+            view.products(model.displayProducts(textField));
+            System.out.println("Search1");
+        }
+        else if (!discountOnly && textField.equals("")){
+            view.products(model.displayProducts1());
+            System.out.println("Search2");
         }
     }
 }

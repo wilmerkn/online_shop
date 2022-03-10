@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+
+
 public class App  implements ActionListener {
 
     // Swing Components
@@ -27,8 +29,8 @@ public class App  implements ActionListener {
     private JPanel suppliersPanel;
     private JPanel discountsPanel;
     private JButton loginButton;
-    private JPasswordField passwordField;
-    private JTextField usernameField;
+    private JPasswordField passwordField1;
+    private JTextField textField2;
     private JPanel loginPanel;
     private JButton registerButton;
     private JButton confirmOrderButton;
@@ -50,7 +52,7 @@ public class App  implements ActionListener {
     private RegisterForm register;
 
 
-
+    // Jtable produkter
     private JTable productTable;
     private JTable orderHistory;
     private JTable productsInOrderTable;
@@ -73,8 +75,6 @@ public class App  implements ActionListener {
         register = new RegisterForm();
         initListeners();
         this.controller = controller;
-
-
 
 
 
@@ -141,7 +141,6 @@ public class App  implements ActionListener {
 
     public void displayTable() {
 
-
         this.productModel = new DefaultTableModel(col,0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -153,8 +152,8 @@ public class App  implements ActionListener {
         productTable.getTableHeader().setReorderingAllowed(false);
         productTable.setModel(productModel);
 
-    }
 
+    }
 
 
 
@@ -199,18 +198,16 @@ public class App  implements ActionListener {
     }
 
 
-
-
-
-
-
     private void getValue(JTable t) {
         int a =productTable.getSelectedRow();
         System.out.println(a);
         System.out.println(productModel.getValueAt(a,0));
     }
 
-
+    public String searchTxtField(){
+        String name = textField1.getText();
+        return name;
+    }
 
 
 
@@ -218,10 +215,7 @@ public class App  implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == loginButton) {
-            //ska gå till connectionmanager och kolla om login i textboxes finns, om det inte finns, felmeddelande,
-            // annars skicka boolean isadmin till initlogin
-            String passString = new String(passwordField.getPassword());
-            controller.login(usernameField.getText(),passString);
+            initLogin(true);
         }
 
         if (e.getSource() == registerButton) {
@@ -229,8 +223,7 @@ public class App  implements ActionListener {
         }
 
         if (e.getSource() == addButton) {
-
-           controller.addProduct(productTable.getValueAt(productTable.getSelectedRow(),0).toString(), (Integer) spinner.getValue());
+            controller.add();
         }
 
         if (e.getSource() == cartConfirm) {
@@ -240,39 +233,50 @@ public class App  implements ActionListener {
         if (e.getSource() == newProductButton) {
             controller.newProduct();
         }
+
         if (e.getSource() == removeProductButton) {
             controller.removeProduct();
         }
+
         if (e.getSource() == addProductButton) {
-           // controller.addProduct();
+            controller.addProduct();
         }
+
         if (e.getSource() == addDiscountButton) {
             controller.addDiscount();
         }
+
         if (e.getSource() == addSuppliersButton) {
             controller.addSupplier();
             System.out.println(supplierModel.getValueAt(suppliersTable.getSelectedRow(),1));
         }
+
         if (e.getSource() == removeSuppliersButton) {
             controller.removeSupplier();
         }
+
         if (e.getSource() == newDiscountButton) {
             controller.newDiscount();
         }
+
         if (e.getSource() == removeDiscountButton) {
             controller.removeDiscount();
         }
+
         if (e.getSource() == confirmOrderButton) {
             controller.confirmOrder();
         }
+
         if (e.getSource() == emptyCartButton) {
             controller.emptyCart();
         }
+
         if (e.getSource() == cartConfirm) {
             controller.cartConfirm();
         }
+
         if (e.getSource() == searchButton) {
-            controller.search(discountOnlyCheckBox.isSelected());
+            controller.search(discountOnlyCheckBox.isSelected(), searchTxtField());
         }
     }
 }
