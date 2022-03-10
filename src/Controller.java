@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Controller {
     private App view;
@@ -11,7 +10,7 @@ public class Controller {
         view.displayTable();
         add();
 
-        view.suppliers(model.selectSuppliers());
+        view.products(model.selectProducts());
     }
 
     public void add() {
@@ -22,6 +21,12 @@ public class Controller {
             view.addRow(data.get(i));
         }
 
+    }
+    public void login(String username, String password){
+        model.loginCheck(username,password);
+    }
+    public void loginOK(boolean admin){
+        view.initLogin(admin);
     }
 
     public void order() {
@@ -36,8 +41,9 @@ public class Controller {
         System.out.println("Remove Product");
     }
 
-    public void addProduct() {
-        System.out.println("Add Product");
+    public void addProduct(String name, int count) {
+        System.out.println(name + " " + count);
+        model.addProduct(name, count);
     }
 
     public void addDiscount() {
@@ -76,7 +82,9 @@ public class Controller {
     public void search(boolean discountOnly) {
         if (discountOnly) {
             System.out.println("Search Discount");
+            view.products(model.displayDiscountProducts());
         } else {
+            view.products(model.displayProducts());
             System.out.println("Search");
         }
     }

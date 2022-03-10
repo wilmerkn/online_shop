@@ -27,8 +27,8 @@ public class App  implements ActionListener {
     private JPanel suppliersPanel;
     private JPanel discountsPanel;
     private JButton loginButton;
-    private JPasswordField passwordField1;
-    private JTextField textField2;
+    private JPasswordField passwordField;
+    private JTextField usernameField;
     private JPanel loginPanel;
     private JButton registerButton;
     private JButton confirmOrderButton;
@@ -177,7 +177,7 @@ public class App  implements ActionListener {
     }
 
     public void products(ArrayList<ArrayList<String>> a) {
-        String[] col = {"VALUE 1","VALUE 2","VALUE 3"};
+        String[] col = {"Product_id","Product_name","Description","Quantity", "Price","Supplier", "Discount rate"};
         this.productModel = new DefaultTableModel(col,0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -218,7 +218,10 @@ public class App  implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == loginButton) {
-            initLogin(true);
+            //ska gå till connectionmanager och kolla om login i textboxes finns, om det inte finns, felmeddelande,
+            // annars skicka boolean isadmin till initlogin
+            String passString = new String(passwordField.getPassword());
+            controller.login(usernameField.getText(),passString);
         }
 
         if (e.getSource() == registerButton) {
@@ -226,7 +229,7 @@ public class App  implements ActionListener {
         }
 
         if (e.getSource() == addButton) {
-            controller.add();
+            controller.addProduct(productTable.getValueAt(productTable.getSelectedRow(),1).toString(), (Integer) spinner.getValue());
         }
 
         if (e.getSource() == cartConfirm) {
@@ -236,52 +239,39 @@ public class App  implements ActionListener {
         if (e.getSource() == newProductButton) {
             controller.newProduct();
         }
-
         if (e.getSource() == removeProductButton) {
             controller.removeProduct();
         }
-
         if (e.getSource() == addProductButton) {
-            controller.addProduct();
+           // controller.addProduct();
         }
-
         if (e.getSource() == addDiscountButton) {
             controller.addDiscount();
         }
-
         if (e.getSource() == addSuppliersButton) {
             controller.addSupplier();
             System.out.println(supplierModel.getValueAt(suppliersTable.getSelectedRow(),1));
         }
-
         if (e.getSource() == removeSuppliersButton) {
             controller.removeSupplier();
         }
-
         if (e.getSource() == newDiscountButton) {
             controller.newDiscount();
         }
-
         if (e.getSource() == removeDiscountButton) {
             controller.removeDiscount();
         }
-
         if (e.getSource() == confirmOrderButton) {
             controller.confirmOrder();
         }
-
         if (e.getSource() == emptyCartButton) {
             controller.emptyCart();
         }
-
-
         if (e.getSource() == cartConfirm) {
             controller.cartConfirm();
         }
-
         if (e.getSource() == searchButton) {
             controller.search(discountOnlyCheckBox.isSelected());
-
         }
     }
 }
