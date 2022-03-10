@@ -157,9 +157,6 @@ public class App  implements ActionListener {
 
 
 
-
-
-
     public void suppliers(ArrayList<ArrayList<String>> a) {
         String[] col = {"Company Name","Address","Phone"};
         this.supplierModel = new DefaultTableModel(col,0) {
@@ -207,7 +204,10 @@ public class App  implements ActionListener {
         System.out.println(productModel.getValueAt(a,0));
     }
 
-
+    public String searchTxtField(){
+        String name = textField1.getText();
+        return name;
+    }
 
 
 
@@ -276,9 +276,7 @@ public class App  implements ActionListener {
         }
 
         if (e.getSource() == searchButton) {
-            controller.search(discountOnlyCheckBox.isSelected());
-
-
+            controller.search(discountOnlyCheckBox.isSelected(), searchTxtField());
         }
     }
 }

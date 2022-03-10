@@ -79,13 +79,45 @@ public class ConnectionManager {
         return data;
     }
 
+
+
+
     // Displaying Products
-    public ArrayList<ArrayList<String>> displayProducts() {
+    public ArrayList<ArrayList<String>> displayProducts(String nameSearch) {
         data.clear();
         try {
             conn = DriverManager.getConnection(url, properties);
+            st = conn.prepareStatement("SELECT * FROM product where product_name = ?");
+            st.setString(1,nameSearch);
+            //st = conn.prepareCall("{CALL selectproduct}");
+            rs = st.executeQuery();
+            int rowIndex = 0;
+            while (rs.next()) {
 
-            st = conn.prepareStatement("SELECT * FROM PRODUCT WHERE NOT discount_id = NULL;");
+                ArrayList<String> rowData = new ArrayList<String>();
+
+                rowData.add(rs.getString("product_id"));
+                rowData.add(rs.getString("product_name"));
+                rowData.add(rs.getString("description"));
+                rowData.add(rs.getString("quantity"));
+                rowData.add(rs.getString("base_price"));
+                rowData.add(rs.getString("supplier_id"));
+
+                data.add(rowData);
+                conn.close();
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+    public ArrayList<ArrayList<String>> displayProducts1() {
+        data.clear();
+        try {
+            conn = DriverManager.getConnection(url, properties);
+            st = conn.prepareCall("{CALL selectproduct}");
             rs = st.executeQuery();
             int rowIndex = 0;
             while (rs.next()) {
@@ -110,13 +142,45 @@ public class ConnectionManager {
     }
 
     // Displaying discount products
-    public ArrayList<ArrayList<String>> displayDiscountProducts(){
+    public ArrayList<ArrayList<String>> displayDiscountProducts(String searchName){
 
         data.clear();
 
         try {
             conn = DriverManager.getConnection(url, properties);
-            st = conn.prepareStatement("SELECT * FROM product");
+            //st = conn.prepareCall("{CALL selectallproduct}");
+            st = conn.prepareStatement("Select * from product where product_name = ? and discount_id = NULL");
+            st.setString(1,searchName);
+            rs = st.executeQuery();
+            int rowIndex = 0;
+            while (rs.next()) {
+
+                ArrayList<String> rowData = new ArrayList<String>();
+
+                rowData.add(rs.getString("product_id"));
+                rowData.add(rs.getString("product_name"));
+                rowData.add(rs.getString("description"));
+                rowData.add(rs.getString("quantity"));
+                rowData.add(rs.getString("base_price"));
+                rowData.add(rs.getString("supplier_id"));
+
+                data.add(rowData);
+                conn.close();
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+    public ArrayList<ArrayList<String>> displayDiscountProducts1(){
+
+        data.clear();
+
+        try {
+            conn = DriverManager.getConnection(url, properties);
+            st = conn.prepareCall("{CALL selectallproduct}");
             rs = st.executeQuery();
             int rowIndex = 0;
             while (rs.next()) {
