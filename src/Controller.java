@@ -11,6 +11,7 @@ public class Controller {
         add();
 
         view.products(model.selectProducts());
+        view.suppliers(model.selectSuppliers());
     }
 
     public void add() {
@@ -41,9 +42,9 @@ public class Controller {
         System.out.println("Remove Product");
     }
 
-    public void addProduct(String name, int count) {
-        System.out.println(name + " " + count);
-        model.addProduct(name, count);
+    public void addProduct(String id, int count) {
+        System.out.println(id + " " + count);
+        model.addProduct(id, count);
     }
 
     public void addDiscount() {

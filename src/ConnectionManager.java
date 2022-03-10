@@ -176,17 +176,22 @@ public class ConnectionManager {
 
     }
 
-    public void addProduct(String name, int count) {
+    public void addProduct(String id, int count) {
         try {
             // kolla i databas om det finns tillräckligt många av vald produkt, isåfall lägg till i order, order ska sen visas i cart som är jtable
             Connection conn = DriverManager.getConnection(url, properties);
 
             //FIXA PREP STATEMENT MED INPUT FRÅN product table i view.... GÅR VIDARE SÅLÄNGE
-            st = conn.prepareStatement("SELECT * FROM product WHERE product_name = ?");
-            st.setString(1, name);
+            st = conn.prepareStatement("SELECT * FROM product WHERE product_id = ?");
+            st.setInt(1, Integer.parseInt(id));
             rs = st.executeQuery();
             if (rs.next()) {
-                System.out.println(rs.getString(1));
+                System.out.println(rs.getString(4));
+                if (Integer.parseInt(rs.getString(5)) < count){
+                    System.out.println("Sorry, we don't have enough in stock to match your purchase request, please lower the amount");
+                }
+
+
 
             }
         }
