@@ -101,6 +101,7 @@ public class ConnectionManager {
                 rowData.add(rs.getString("description"));
                 rowData.add(rs.getString("quantity"));
                 rowData.add(rs.getString("base_price"));
+                rowData.add(rs.getString("discount_id"));
                 rowData.add(rs.getString("supplier_id"));
 
                 data.add(rowData);
@@ -113,7 +114,7 @@ public class ConnectionManager {
         return data;
     }
 
-    public ArrayList<ArrayList<String>> displayProducts1() {
+    public ArrayList<ArrayList<String>> showAllProducts() {
         data.clear();
         try {
             conn = DriverManager.getConnection(url, properties);
@@ -129,6 +130,7 @@ public class ConnectionManager {
                 rowData.add(rs.getString("description"));
                 rowData.add(rs.getString("quantity"));
                 rowData.add(rs.getString("base_price"));
+                rowData.add(rs.getString("discount_id"));
                 rowData.add(rs.getString("supplier_id"));
 
                 data.add(rowData);
@@ -162,6 +164,7 @@ public class ConnectionManager {
                 rowData.add(rs.getString("description"));
                 rowData.add(rs.getString("quantity"));
                 rowData.add(rs.getString("base_price"));
+                rowData.add(rs.getString("discount_id"));
                 rowData.add(rs.getString("supplier_id"));
 
                 data.add(rowData);
@@ -192,6 +195,7 @@ public class ConnectionManager {
                 rowData.add(rs.getString("description"));
                 rowData.add(rs.getString("quantity"));
                 rowData.add(rs.getString("base_price"));
+                rowData.add(rs.getString("discount_id"));
                 rowData.add(rs.getString("supplier_id"));
 
                 data.add(rowData);

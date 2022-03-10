@@ -94,7 +94,7 @@ public class Controller {
             System.out.println("Search1");
         }
         else if (!discountOnly && textField.equals("")){
-            view.products(model.displayProducts1());
+            view.products(model.showAllProducts());
             System.out.println("Search2");
         }
     }
