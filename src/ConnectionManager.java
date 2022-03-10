@@ -255,14 +255,15 @@ public class ConnectionManager {
             rs = st.executeQuery();
             if (rs.next()) {
                 System.out.println(rs.getString(4));
-                if (Integer.parseInt(rs.getString(5)) < count){
+                //för tillfället krashar det om värdet är null men det ska vara not null i DB så vet inte om det är värt att fixa
+                if (Integer.parseInt(rs.getString(4)) < count){
                     System.out.println("Sorry, we don't have enough in stock to match your purchase request, please lower the amount");
                     conn.close();
                 }
                 //Om quantity är ok, lägg till i cart och subtrahera från DB
                 else{
                     st = conn.prepareStatement("UPDATE product set quantity = ? WHERE product_id = ?");
-                    st.setInt(1, Integer.parseInt(rs.getString(5)) - count);
+                    st.setInt(1, Integer.parseInt(rs.getString(4)) - count);
                     st.setInt(2, Integer.parseInt(id));
                     st.executeUpdate();
                     conn.close();

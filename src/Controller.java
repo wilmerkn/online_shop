@@ -19,7 +19,10 @@ public class Controller {
 
 
     }
-
+    public void showProductsTable(){
+        //av någon anledning så hamnar den man gör något med sist i listan, tex lägger till i cart, någon konstig sorteringsgrej
+        view.products(model.selectProducts());
+    }
 
     public void add() {
         System.out.println("TEST!");

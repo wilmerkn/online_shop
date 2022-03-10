@@ -228,6 +228,7 @@ public class App  implements ActionListener {
         if (e.getSource() == addButton) {
 
             controller.addProduct(productTable.getValueAt(productTable.getSelectedRow(),0).toString(), (Integer) spinner.getValue());
+            controller.showProductsTable();
         }
 
         if (e.getSource() == cartConfirm) {
