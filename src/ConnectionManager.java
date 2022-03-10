@@ -12,10 +12,6 @@ public class ConnectionManager {
 
     ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 
-    ArrayList<ArrayList<String>> productList = new ArrayList<ArrayList<String>>();
-    ArrayList<ArrayList<String>> discountProductList = new ArrayList<ArrayList<String>>();
-
-
     public ConnectionManager(Controller controller) {
         this.properties = new Properties();
         properties.setProperty("user","ah0773");
@@ -85,7 +81,7 @@ public class ConnectionManager {
 
     // Displaying Products
     public ArrayList<ArrayList<String>> displayProducts() {
-        productList.clear();
+        data.clear();
         try {
             conn = DriverManager.getConnection(url, properties);
 
@@ -103,22 +99,20 @@ public class ConnectionManager {
                 rowData.add(rs.getString("base_price"));
                 rowData.add(rs.getString("supplier_id"));
 
-                productList.add(rowData);
+                data.add(rowData);
                 conn.close();
             }
 
         } catch (Exception e){
             e.printStackTrace();
         }
-        return productList;
+        return data;
     }
 
     // Displaying discount products
-
-
     public ArrayList<ArrayList<String>> displayDiscountProducts(){
 
-        discountProductList.clear();
+        data.clear();
 
         try {
             conn = DriverManager.getConnection(url, properties);
@@ -136,22 +130,20 @@ public class ConnectionManager {
                 rowData.add(rs.getString("base_price"));
                 rowData.add(rs.getString("supplier_id"));
 
-                productList.add(rowData);
+                data.add(rowData);
                 conn.close();
             }
 
         } catch (Exception e){
             e.printStackTrace();
         }
-        return productList;
+        return data;
     }
 
 
     public boolean validate() {
         return true;
     }
-
-
 
 
 
