@@ -29,8 +29,8 @@ public class App  implements ActionListener {
     private JPanel suppliersPanel;
     private JPanel discountsPanel;
     private JButton loginButton;
-    private JPasswordField passwordField1;
-    private JTextField textField2;
+    private JPasswordField passwordField;
+    private JTextField usernameField;
     private JPanel loginPanel;
     private JButton registerButton;
     private JButton confirmOrderButton;
@@ -215,7 +215,10 @@ public class App  implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == loginButton) {
-            initLogin(true);
+            //ska gå till connectionmanager och kolla om login i textboxes finns, om det inte finns, felmeddelande,
+            // annars skicka boolean isadmin till initlogin
+            String passString = new String(passwordField.getPassword());
+            controller.login(usernameField.getText(),passString);
         }
 
         if (e.getSource() == registerButton) {
@@ -223,7 +226,8 @@ public class App  implements ActionListener {
         }
 
         if (e.getSource() == addButton) {
-            controller.add();
+
+            controller.addProduct(productTable.getValueAt(productTable.getSelectedRow(),0).toString(), (Integer) spinner.getValue());
         }
 
         if (e.getSource() == cartConfirm) {
@@ -239,7 +243,7 @@ public class App  implements ActionListener {
         }
 
         if (e.getSource() == addProductButton) {
-            controller.addProduct();
+            //controller.addProduct();
         }
 
         if (e.getSource() == addDiscountButton) {

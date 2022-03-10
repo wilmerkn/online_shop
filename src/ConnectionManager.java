@@ -23,31 +23,30 @@ public class ConnectionManager {
 
     public ArrayList<ArrayList<String>> selectProducts() {
         data.clear();
-
         try {
+            conn = DriverManager.getConnection(url, properties);
 
-            conn = DriverManager.getConnection(url,properties);
-            st = conn.prepareStatement("SELECT * FROM supplier");
+            st = conn.prepareStatement("SELECT * FROM product");
             rs = st.executeQuery();
             int rowIndex = 0;
-
             while (rs.next()) {
 
                 ArrayList<String> rowData = new ArrayList<String>();
 
+                rowData.add(rs.getString("product_id"));
+                rowData.add(rs.getString("product_name"));
+                rowData.add(rs.getString("description"));
+                rowData.add(rs.getString("quantity"));
+                rowData.add(rs.getString("base_price"));
+                rowData.add(rs.getString("supplier_id"));
 
-                rowData.add(rs.getString("company_name"));
-                rowData.add(rs.getString("address"));
-                rowData.add(rs.getString("phone_number"));
-                System.out.println(rowData.get(1));
                 data.add(rowData);
                 conn.close();
             }
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
         return data;
     }
 
@@ -211,7 +210,7 @@ public class ConnectionManager {
 
 
 
-    public void inserCustomer() {
+    public void insertCustomer() {
 
         try {
             Connection conn = DriverManager.getConnection(url,properties);
@@ -244,5 +243,58 @@ public class ConnectionManager {
         }
 
 
+    }
+    public void addProduct(String id, int count) {
+        try {
+            // kolla i databas om det finns tillräckligt många av vald produkt, isåfall lägg till i order, order ska sen visas i cart som är jtable
+            Connection conn = DriverManager.getConnection(url, properties);
+
+            //FIXA PREP STATEMENT MED INPUT FRÅN product table i view.... GÅR VIDARE SÅLÄNGE
+            st = conn.prepareStatement("SELECT * FROM product WHERE product_id = ?");
+            st.setInt(1, Integer.parseInt(id));
+            rs = st.executeQuery();
+            if (rs.next()) {
+                System.out.println(rs.getString(4));
+                if (Integer.parseInt(rs.getString(5)) < count){
+                    System.out.println("Sorry, we don't have enough in stock to match your purchase request, please lower the amount");
+                }
+
+
+
+            }
+        }
+        catch(SQLException throwables){
+            throwables.printStackTrace();
+        }
+
+    }
+    //NÄSTAN KLAR
+    public void loginCheck(String username, String password) {
+        try {
+            Connection conn = DriverManager.getConnection(url, properties);
+
+            //FIXA PREP STATEMENT MED INPUT FRÅN VIEW TEXTFIELDS.... GÅR VIDARE SÅLÄNGE
+            st = conn.prepareStatement("SELECT * FROM login WHERE username = ?");
+            st.setString(1, username);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                if (password.equals(rs.getString(3))) {
+                    //kolla så att password stämmer och sen kolla om admin, skickas till controller som intierar login
+                    controller.loginOK(rs.getBoolean(5));
+                    conn.close();
+                    return;
+                }
+                else {
+                    System.out.println("Wrong password or username");
+                }
+            }
+            else {
+                System.out.println("Wrong password or username");
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }

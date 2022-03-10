@@ -9,10 +9,11 @@ public class Controller {
     public Controller() {
         this.view = new App(this);
         this.model = new ConnectionManager(this);
-        view.displayTable();
-        add();
+        view.products(model.selectProducts());
 
-        view.suppliers(model.selectSuppliers());
+        //view.displayTable();
+      //  add();
+
 
     }
 
@@ -25,6 +26,12 @@ public class Controller {
             view.addRow(data.get(i));
         }
 
+    }
+    public void login(String username, String password){
+        model.loginCheck(username,password);
+    }
+    public void loginOK(boolean admin){
+        view.initLogin(admin);
     }
 
     public void order() {
@@ -39,8 +46,9 @@ public class Controller {
         System.out.println("Remove Product");
     }
 
-    public void addProduct() {
-        System.out.println("Add Product");
+    public void addProduct(String id, int count) {
+        System.out.println(id + " " + count);
+        model.addProduct(id, count);
     }
 
     public void addDiscount() {
