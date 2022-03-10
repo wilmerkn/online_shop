@@ -13,6 +13,7 @@ public class ConnectionManager {
     ArrayList<ArrayList<String>> data = new ArrayList<ArrayList<String>>();
 
     ArrayList<ArrayList<String>> productList = new ArrayList<ArrayList<String>>();
+    ArrayList<ArrayList<String>> discountProductList = new ArrayList<ArrayList<String>>();
 
 
     public ConnectionManager(Controller controller) {
@@ -85,6 +86,40 @@ public class ConnectionManager {
     // Displaying Products
     public ArrayList<ArrayList<String>> displayProducts() {
         productList.clear();
+        try {
+            conn = DriverManager.getConnection(url, properties);
+
+            st = conn.prepareStatement("SELECT * FROM PRODUCT WHERE NOT discount_id = NULL;");
+            rs = st.executeQuery();
+            int rowIndex = 0;
+            while (rs.next()) {
+
+                ArrayList<String> rowData = new ArrayList<String>();
+
+                rowData.add(rs.getString("product_id"));
+                rowData.add(rs.getString("product_name"));
+                rowData.add(rs.getString("description"));
+                rowData.add(rs.getString("quantity"));
+                rowData.add(rs.getString("base_price"));
+                rowData.add(rs.getString("supplier_id"));
+
+                productList.add(rowData);
+                conn.close();
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return productList;
+    }
+
+    // Displaying discount products
+
+
+    public ArrayList<ArrayList<String>> displayDiscountProducts(){
+
+        discountProductList.clear();
+
         try {
             conn = DriverManager.getConnection(url, properties);
             st = conn.prepareStatement("SELECT * FROM product");

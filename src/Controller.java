@@ -16,6 +16,7 @@ public class Controller {
         view.products(model.displayProducts());
     }
 
+
     public void add() {
         System.out.println("TEST!");
         ArrayList<ArrayList<String>> data = model.selectProducts();
@@ -78,7 +79,9 @@ public class Controller {
     public void search(boolean discountOnly) {
         if (discountOnly) {
             System.out.println("Search Discount");
+            view.products(model.displayDiscountProducts());
         } else {
+            view.products(model.displayProducts());
             System.out.println("Search");
         }
     }
