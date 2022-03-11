@@ -53,8 +53,8 @@ public class App  implements ActionListener {
     private JButton newDiscountButton;
     private JButton removeDiscountButton;
     private JButton addDiscountButton;
-    private JFrame frame;
-    private RegisterForm register;
+    private final JFrame frame;
+    private final RegisterForm register;
 
 
     // Jtable produkter
@@ -62,8 +62,8 @@ public class App  implements ActionListener {
     private JTable orderHistory;
     private JTable productsInOrderTable;
     private DefaultTableModel productModel;
-    private Controller controller;
-    private String[] col = {"Produkt","Pris"};
+    private final Controller controller;
+    private final String[] col = {"Produkt","Pris"};
 
     private DefaultTableModel supplierModel;
     private DefaultTableModel cartModel;
@@ -179,7 +179,7 @@ public class App  implements ActionListener {
 
         for (int i = 0; i < a.size(); i++) {
             supplierModel.addRow(a.get(i).toArray());
-        };
+        }
     }
 
     public void products(ArrayList<ArrayList<String>> a) {
@@ -197,7 +197,7 @@ public class App  implements ActionListener {
 
         for (int i = 0; i < a.size(); i++) {
             productModel.addRow(a.get(i).toArray());
-        };
+        }
     }
     public void cart(ArrayList<ArrayList<String>> a) {
         String[] col = {"Product_id", "Order_id", "Quantity"};
@@ -257,14 +257,18 @@ public class App  implements ActionListener {
         }
 
         if (e.getSource() == addButton) {
-            if (productTable.getValueAt(productTable.getSelectedRow(), 0).toString() != null) {
+
+            if (productTable.getValueAt(productTable.getSelectedRow(), 3) != null) {
                 controller.addProduct(productTable.getValueAt(productTable.getSelectedRow(), 0).toString(), (Integer) spinner.getValue());
                 controller.showProductsTable();
+            }
+            else {
+                System.out.println("There might be none in stock, please try another product.");
             }
         }
 
         if (e.getSource() == cartConfirm) {
-            controller.order();
+            controller.confirmOrder();
         }
 
         if (e.getSource() == newProductButton) {
