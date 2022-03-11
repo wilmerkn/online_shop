@@ -61,6 +61,7 @@ public class App  implements ActionListener {
     private String[] col = {"Produkt","Pris"};
 
     private DefaultTableModel supplierModel;
+    private DefaultTableModel cartModel;
 
 
     public App(Controller controller) {
@@ -192,6 +193,25 @@ public class App  implements ActionListener {
             productModel.addRow(a.get(i).toArray());
         };
     }
+    public void cart(ArrayList<ArrayList<String>> a) {
+        String[] col = {"Product_id", "Order_id", "Quantity"};
+        this.cartModel = new DefaultTableModel(col, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        productsInOrderTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        productsInOrderTable.getTableHeader().setReorderingAllowed(false);
+        productsInOrderTable.setModel(cartModel);
+
+        for (int i = 0; i < a.size(); i++) {
+            cartModel.addRow(a.get(i).toArray());
+        }
+
+    }
+
 
     public void supplierGetValue() {
         System.out.println(suppliersTable.getSelectedRow());
@@ -203,6 +223,11 @@ public class App  implements ActionListener {
         System.out.println(a);
         System.out.println(productModel.getValueAt(a,0));
     }
+        private void cartGetValue(JTable t) {
+            int a =productTable.getSelectedRow();
+            System.out.println(a);
+            System.out.println(cartModel.getValueAt(a,0));
+        }
 
     public String searchTxtField(){
         String name = textField1.getText();

@@ -49,6 +49,31 @@ public class ConnectionManager {
         }
         return data;
     }
+    public ArrayList<ArrayList<String>> selectCart() {
+        data.clear();
+        try {
+            conn = DriverManager.getConnection(url, properties);
+
+            st = conn.prepareStatement("SELECT * FROM order_item");
+            rs = st.executeQuery();
+            int rowIndex = 0;
+            while (rs.next()) {
+
+                ArrayList<String> rowData = new ArrayList<String>();
+
+                rowData.add(rs.getString("product_id"));
+                rowData.add(rs.getString("order_id"));
+                rowData.add(rs.getString("quantity"));
+
+                data.add(rowData);
+                conn.close();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
 
 
     public ArrayList<ArrayList<String>> selectSuppliers() {
@@ -256,7 +281,7 @@ public class ConnectionManager {
             if (rs.next()) {
                 System.out.println(rs.getString(4));
                 //för tillfället krashar det om värdet är null men det ska vara not null i DB så vet inte om det är värt att fixa
-                if (Integer.parseInt(rs.getString(4)) < count){
+                if (Integer.parseInt(rs.getString(4)) < count || count <= 0){
                     System.out.println("Sorry, we don't have enough in stock to match your purchase request, please lower the amount");
                     conn.close();
                 }
@@ -267,7 +292,9 @@ public class ConnectionManager {
                     st.setInt(2, Integer.parseInt(id));
                     st.executeUpdate();
                     conn.close();
-                    //Något fel med matten haha, uppdateras fel
+                    //ska ännu lägga till i cart
+                    addToCart(Integer.parseInt(id),count);
+
 
                 }
 
@@ -277,6 +304,24 @@ public class ConnectionManager {
         catch(SQLException throwables){
             throwables.printStackTrace();
         }
+
+    }
+    public void addToCart(int product_id, int quantity) {
+        try {
+            Connection conn = DriverManager.getConnection(url, properties);
+//LÄgger till i cart, ska kallas på från addProduct, och sedan uppdatera cart-table,
+// vet inte hur jag ska göra med order_id(ska det finnas flera order_id i samma order eller ska alla vara samma?)
+
+            st = conn.prepareStatement("INSERT INTO order_item (product_id, quantity) VALUES( ?, ?)");
+            st.setInt(1, product_id);
+            st.setInt(2, quantity);
+
+            st.executeUpdate();
+            controller.showCartTable();
+        }
+         catch(SQLException throwables){
+                throwables.printStackTrace();
+            }
 
     }
 
