@@ -30,7 +30,11 @@ public class App  implements ActionListener {
     private JPanel discountsPanel;
     private JButton loginButton;
     private JPasswordField passwordField;
+<<<<<<< Updated upstream
     private JTextField usernameField;
+=======
+    private JTextField textField2;
+>>>>>>> Stashed changes
     private JPanel loginPanel;
     private JButton registerButton;
     private JButton confirmOrderButton;

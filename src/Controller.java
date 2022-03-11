@@ -94,24 +94,25 @@ public class Controller {
     }
 
     public void search(boolean discountOnly, String textField) {
-
+        // Med discount produkter och namnsöl metod
         if (discountOnly && !Objects.equals(textField, "")) {
             System.out.println("Search Discount1");
-
-            view.products(model.displayDiscountProducts(textField));
-
+            view.products(model.displayDiscountProductsWithNameSearch(textField));
+        // Med discount produkter utan namnsök
         } else if (discountOnly && textField.equals("")){
             // displaya vanligt
             view.products(model.displayDiscountProducts1());
             System.out.println("Search Discount2");
 
+            // Ingen discount och namnsök metod.
         } else if (!discountOnly && !Objects.equals(textField, "")){
 
-            view.products(model.displayProducts(textField));
+            view.products(model.displayProductsWithNameSearch(textField));
             System.out.println("Search1");
         }
+            // Ingen discount utan namnsök.
         else if (!discountOnly && textField.equals("")){
-            view.products(model.displayProducts1());
+            view.products(model.displayProducts());
             System.out.println("Search2");
         }
     }

@@ -107,7 +107,7 @@ public class ConnectionManager {
 
 
     // Displaying Products
-    public ArrayList<ArrayList<String>> displayProducts(String nameSearch) {
+    public ArrayList<ArrayList<String>> displayDiscountProductsWithNameSearch(String nameSearch) {
         data.clear();
         try {
             conn = DriverManager.getConnection(url, properties);
@@ -137,7 +137,7 @@ public class ConnectionManager {
         return data;
     }
 
-    public ArrayList<ArrayList<String>> displayProducts1() {
+    public ArrayList<ArrayList<String>> displayProducts() {
         data.clear();
         try {
             conn = DriverManager.getConnection(url, properties);
@@ -166,7 +166,7 @@ public class ConnectionManager {
     }
 
     // Displaying discount products
-    public ArrayList<ArrayList<String>> displayDiscountProducts(String searchName){
+    public ArrayList<ArrayList<String>> displayProductsWithNameSearch(String searchName){
 
         data.clear();
 
